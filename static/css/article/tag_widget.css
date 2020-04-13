@@ -1,0 +1,65 @@
+.tag-widget-container{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+}
+.autocomplete-field{
+  position: relative;
+  width:200px;
+}
+.pulldown-btn{
+  position: absolute;
+  top: 0;
+  right: -15px;
+  height: 100%;
+  width: 30px;
+}
+#pull-down-menu{
+  display: none;
+}
+.suggest{
+  width: 100%;
+}
+#tag-list{
+  display: none;
+}
+form .related-widget-wrapper ul{
+  display: none;
+}
+input[type="text"]:focus {
+  outline: 0;
+}
+
+button:focus {
+  outline: 0;
+}
+ul.dropdown {
+    display: none;
+    list-style-type: none;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    background-color: #ddd;
+    max-height: 300px;
+    width: 200px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+ul.dropdown li {
+    margin: 3px;
+    cursor: pointer;
+}
+
+ul.dropdown li:hover {
+    opacity: 0.5;
+}
+
+.suggest-item {
+    cursor: pointer;
+}
+
+.suggest-item:hover {
+    opacity: 0.5;
+}
