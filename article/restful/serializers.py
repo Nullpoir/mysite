@@ -23,22 +23,9 @@ class RecursiveField(serializers.Serializer):
 
 class TagSerializer(serializers.ModelSerializer):
     queryset = Tag.objects.all()
-    children =  RecursiveField(many=True)
     class Meta:
         model = Tag
-        fields = ('pk','name','children')
-    def __init__(self, *args, **kwargs):
-        super(TagSerializer, self).__init__(*args, **kwargs)
-        try:
-            context = kwargs.get('context')
-            is_serialized = context.get('is_serialized', None)
-            if not is_serialized:
-                self.fields.pop('children')
-            return None
-        except AttributeError:
-            pass
-        self.fields.pop('children')
-        return None
+        fields = ('pk','name',)
 
 class SubArticleSerializer(serializers.ModelSerializer):
     queryset = Article.objects.published()

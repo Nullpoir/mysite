@@ -6,6 +6,3 @@ article_router.register('',api_views.ArticleView)
 
 category_router = DefaultRouter()
 category_router.register('',api_views.CategoryView)
-
-tag_router = DefaultRouter()
-tag_router.register('',api_views.TagView)

@@ -8,15 +8,7 @@ class TagSuggestForm(forms.ModelForm):
 
     class Meta:
         model = Tag
-        exclude = ('body','index','related_posts',)
-        widgets = {
-            'tags': TagSuggestWidget(
-                    attrs={
-                    'data-url': '/spa/1.0/tag/'
-                    }
-                ),
-            'sns_intro': forms.Textarea,
-        }
+        exclude = ('body','index')
     def clean_tags(self):
         tags = self.cleaned_data.get('tags')
         if tags.count() > 2:

@@ -16,9 +16,9 @@ class ArticleAdmin(admin.ModelAdmin):
     list_filter = ('tags',)
     search_fields = ('title',)
     list_per_page = 20
+    filter_horizontal = ('tags',)
     exclude = ('body','index','meta','celery_id','is_need_celery_change','pv',)
     #form = TagSuggestForm
-    form = TagSuggestForm
 
 # Register your models here.
 admin.site.register(Article,ArticleAdmin)

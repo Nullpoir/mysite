@@ -57,35 +57,6 @@ class CategoryView(viewsets.ReadOnlyModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
-class TagView(viewsets.ReadOnlyModelViewSet):
-    queryset = Tag.objects.all()
-    serializer_class = TagSerializer
-
-    def list(self,request,*args, **kwargs):
-        #初期設定
-        is_serialized = request.GET.getlist("serialized")
-        if not is_serialized:
-            query = Q()
-            get_queries = request.query_params
-            if "keyword" in get_queries and (get_queries["keyword"] != ""):
-                for word in get_queries["keyword"].replace("　"," ").split(" "):
-                    query.add(Q(name__icontains=word),Q.OR)
-
-            tag = Tag.objects.all().filter(query)
-
-            return Response(
-                TagSerializer(
-                    tag,many=True, context=dict(is_serialized=is_serialized)
-                    ).data
-                )
-        else:
-            tag = Tag.objects.all().filter(parent=None)
-
-            return Response(
-                TagSerializer(
-                    tag,many=True, context=dict(is_serialized=is_serialized)
-                    ).data
-                )
 
 class CommentView(APIView):
     def get(self,request):
