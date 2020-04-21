@@ -63,7 +63,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django.contrib.sites',
     'django.contrib.sitemaps',
-    'django_celery_results',
     # 以下こちらが作成したアプリのConfig
     'article.apps.ArticleConfig',
     'adminsortable',

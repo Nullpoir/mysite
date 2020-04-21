@@ -5,7 +5,7 @@ def MetaContentPublisher(source):
         r"<li><a href=\"#mcetoc.*</a></li>",
         #タグ削除
         r"<[^>]*?>",
-        ]
+    ]
     returnText = source
     for i in regexies:
         regex = re.compile(i)

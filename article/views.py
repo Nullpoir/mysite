@@ -38,7 +38,12 @@ def SinglePageView(request):
         if request_url.split("/")[1] == "article":
             article_pk = int(request_url.split("/")[2])
             article = Article.objects.get(pk=article_pk)
-            OGP_HEADER = GenOGP(article.title,"https://nullab.xyz"+request_url,"https://nullab.xyz"+article.thumbnail_url(),"nullab","article","nullabの記事")
+            OGP_HEADER = GenOGP(
+                article.title,
+                "https://nullab.xyz"+request_url,
+                "https://nullab.xyz"+article.thumbnail_url(),
+                "nullab","article","nullabの記事"
+            )
             print(OGP_HEADER)
             return render(request,"index.html",{"SEO_HEADER":OGP_HEADER,"PREFIX":prefix})
         else:

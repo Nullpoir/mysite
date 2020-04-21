@@ -4,7 +4,6 @@ from .models import Article
 import datetime
 from pytz import timezone
 from article.tasks import scheduled_worker
-from django_celery_results.models import TaskResult
 from django.db.models import signals
 from celery.task.control import revoke
 from contextlib import contextmanager

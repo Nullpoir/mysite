@@ -47,7 +47,7 @@ class Tag(models.Model):
                  blank=True,
                  on_delete=models.CASCADE,
                  related_name='children'
-                 )
+    )
 
     def __str__(self):
         return self.name
@@ -71,7 +71,7 @@ class Article(models.Model):
             blank=True,
             related_name='thumbnail_article',
             on_delete='CASCADE'
-        )
+    )
     edit_body = RichTextField()
     tags = models.ManyToManyField(Tag, verbose_name='タグ', blank=True)
     body = models.TextField()
@@ -116,7 +116,7 @@ class Article(models.Model):
         query.add(Q(pub_date__lte=self.pub_date),Q.AND)
         query.add(Q(pub_type=1),Q.AND)
         article_list = []
-        related_posts_list =Article.objects.all().filter(query).order_by('pub_date').reverse().distinct().exclude(pk=self.pk)[:6]
+        related_posts_list = Article.objects.all().filter(query).order_by('pub_date').reverse().distinct().exclude(pk=self.pk)[:6]
         print(related_posts_list,query)
         for i in related_posts_list:
             article_list.append({
@@ -124,7 +124,7 @@ class Article(models.Model):
                             'title':i.title,
                             'pub_date':i.pub_date,
                             'thumbnail_url':i.thumbnail_url()
-                            })
+            })
         return article_list
 
     def delete(self):
