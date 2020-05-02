@@ -107,6 +107,7 @@ class Article(models.Model):
     def save(self):
         self.is_need_celery_change = self.tracker.has_changed('pub_date')
         self.meta = MetaContentPublisher(self.edit_body)
+        self.body,self.index = article_convert(self.edit_body)
         super(Article, self).save()
 
     def related_posts(self):
@@ -147,3 +148,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.name
+

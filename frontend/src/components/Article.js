@@ -66,7 +66,7 @@ class RelatedCard extends Component {
     let dt = moment(this.props.pub_date);
     return(
       <article className="card">
-        <Link to={"/article/"+this.props.id}>
+        <a href={"/article/"+this.props.id}>
         <div className="card-link-field">
           <div className="card-thumbnail-container">
             <LazyLoad>
@@ -76,8 +76,7 @@ class RelatedCard extends Component {
           <div className="card-date" >{dt.format("YYYY/MM/DD HH:mm:ss")}</div>
           <div className="card-title">{this.props.title}</div>
         </div>
-        </Link>
-
+        </a>
         <style jsx>{related_card_style}</style>
       </article>
     );
