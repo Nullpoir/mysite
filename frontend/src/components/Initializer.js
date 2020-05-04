@@ -1,27 +1,31 @@
-import { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useState,useEffect } from 'react'
 import ReactGA from 'react-ga';
+import {
+  useParams,
+  useHistory,
+  useLocation,
+} from 'react-router-dom';
 
-class Initializer extends Component {
-  componentDidUpdate(prevProps) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
-      window.scrollTo(0, 0);
-      const { pathname } = this.props.location;
-      ReactGA.set({ page: pathname });
-      ReactGA.pageview(pathname);
+const Initializer = (props) => {
+  const location = useLocation()
+  // マウント時だけ実行
+  useEffect(
+    function initialize() {
+      ReactGA.initialize('UA-134690918-1')
+    },
+    []
+  )
+  useEffect(
+    function setGA() {
+      // 画面遷移の旅に実行
+      window.scrollTo(0, 0)
+      ReactGA.set({ page: location.pathname })
+      ReactGA.pageview(location.pathname)
     }
-  }
+  )
 
-  componentDidMount() {
-    ReactGA.initialize('UA-134690918-1');
-    const { pathname } = this.props.location;
-    ReactGA.set({ page: pathname });
-    ReactGA.pageview(pathname);
-  }
+  return(props.children)
 
-  render() {
-    return this.props.children;
-  }
 }
 
-export default withRouter(Initializer);
+export default Initializer
