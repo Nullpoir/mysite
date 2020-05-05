@@ -11,6 +11,11 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { Helmet } from 'react-helmet'
+import './stylus/top.styl'
+import Search from './subcomponents/Top/Search'
+import Categories from './subcomponents/Top/Categories'
+import Pager from './subcomponents/Top/Pager'
+import Tags from './subcomponents/Top/Tags'
 
 // Top
 const Top = (props) => {
@@ -27,9 +32,7 @@ const Top = (props) => {
         //
         let query = location.search
         let qs = queryString.parse(query)
-        let category = qs.categories ? qs.categories : "トップ"
-        console.log(category)
-        setCategory(category)
+        setCategory(qs.categories ? qs.categories : "トップ")
         const res = await fetch('/spa/1.0/article/?field=body&field=index&field=meta&'+query.slice(1))
         res
           .json()
@@ -50,20 +53,27 @@ const Top = (props) => {
 
   if(isLoaded){
     let list = data.results.slice();
-    let tString = "nullab | " + {category}
       return(
         <div className="content-root">
           <Helmet
-            title={tString}
+            title={"nullab | " + category}
             meta={[
               {name:"description",content:"自称フルスタックエンジニアが運営するブログ"}
             ]}
           />
           {/*  検索 */}
+          <Search />
+          {/*  カテゴリ表示 */}
+          <Categories />
           {/*リスト表示 */}
           <ArticleList list={list} />
-          <Link to='/?ff=ffa' >あ</Link>
-
+          {/*ページャー */}
+          <Pager
+            current={data.current}
+            next={data.next}
+            prev={data.previous}
+            last={data.last}
+            />
         </div>
       );
     } else {
@@ -77,7 +87,6 @@ const Top = (props) => {
           </div>
         );
     }
-
 
 }
 export default Top
@@ -118,6 +127,7 @@ const Card= (props) => {
       {
         props.tags != undefined &&
           <div className="card-lower">
+            <Tags tags={props.tags} />
           </div>
       }
 

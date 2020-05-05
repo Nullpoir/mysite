@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import {ads_style} from "./styles/ads-styles.js";
 
 export default function AdsCard(props) {
     useEffect(() => {
@@ -17,7 +16,6 @@ export default function AdsCard(props) {
              data-full-width-responsive="true"
              >
         </ins>
-        <style jsx>{ads_style}</style>
       </div>
     );
 }
