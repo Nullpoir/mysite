@@ -9,10 +9,11 @@ import {
 } from 'react-router-dom'
 import moment from 'moment/moment'
 import { Helmet } from 'react-helmet'
-import AdsCard from './AdsCard.js'
 import hljs from 'highlightjs'
 import Tags from './subcomponents/Top/Tags.js'
 import Page404 from './Page404.js'
+import './stylus/article.styl'
+import AdsCard from './AdsCard.js'
 
 
 const Article = (props) => {
@@ -47,8 +48,50 @@ const Article = (props) => {
   useEffect(
     () => {
       if(!loadContent && isLoaded){
+        // サイドバー設定
         props.setSideContent((<SideContent content={data[0].index} />))
         setLoadContent(true)
+
+        // 遅延読み込みやシンタックスハイライト実装
+        const content = document
+        // 遅延読み込みのイベントリスな
+        const lazyListener = () => {
+          let io = new IntersectionObserver(
+              (entries) => {
+                entries.forEach(
+                (entry) => {
+                    if(entry.intersectionRatio != 0) {
+                      entry.target.src = entry.target.dataset.src;
+                      io.unobserve(entry.target);
+                    }
+                  }
+                )
+              },
+              {
+                root: null,
+                rootMargin: "0px 0px 0px 0px",
+                threshold: [0.05],
+              }
+
+          );
+          let imgs = content.querySelectorAll('.lazyload');
+          for(var i = 0;i < imgs.length;i++) {
+            io.observe(imgs[i]);
+           }
+           content.removeEventListener('scroll',lazyListener);
+         }
+        // 遅延読み込みのイベント登録
+        content.addEventListener('scroll',lazyListener);
+
+        // シンタックスハイライターのイベントリスナ
+        const codeListener = () => {
+          content.querySelectorAll('pre code').forEach((block) => {
+              hljs.highlightBlock(block);
+            });
+           content.removeEventListener('scroll',codeListener);
+        }
+        // シンタックスハイライターのイベント登録
+        content.addEventListener('scroll',codeListener);
       }
     },
     [isLoaded]
@@ -91,6 +134,7 @@ const Article = (props) => {
               }
             }
           />
+        <AdsCard />
         </div>
       )
     } else {

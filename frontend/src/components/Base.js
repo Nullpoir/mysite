@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Top from './Top.js'
 import Page404 from './Page404.js'
 import Article from './Article.js'
+import Privacy from './Privacy.js'
 import Initializer from './Initializer.js'
 import {
   BrowserRouter as Router,
@@ -58,6 +59,9 @@ const Base = () => {
                 </Route>
                 <Route path="/article/:pk">
                   <Article setSideContent={setSideContent}/>
+                </Route>
+                <Route path="/privacy">
+                  <Privacy setSideContent={setSideContent}/>
                 </Route>
                 <Route path="/404">
                   <Page404 />

@@ -16,6 +16,8 @@ import Search from './subcomponents/Top/Search'
 import Categories from './subcomponents/Top/Categories'
 import Pager from './subcomponents/Top/Pager'
 import Tags from './subcomponents/Top/Tags'
+import AdsCard from './AdsCard.js'
+
 
 // Top
 const Top = (props) => {
@@ -86,6 +88,7 @@ const Top = (props) => {
             prev={data.previous}
             last={data.last}
             />
+          <AdsCard />
         </div>
       );
     } else {
