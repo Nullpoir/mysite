@@ -2,12 +2,15 @@ import React, { useState,useEffect } from 'react'
 import ReactDOM from "react-dom"
 import PropTypes from 'prop-types'
 import Top from './Top.js'
+import Page404 from './Page404.js'
+import Article from './Article.js'
 import Initializer from './Initializer.js'
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Link,
+  Redirect,
   useParams,
   useHistory,
   useLocation,
@@ -17,7 +20,7 @@ import './stylus/base.styl'
 const Base = () => {
   // ステート定義
   const [toggle,setToggle] = useState(false)
-  const [isActive,setIsActive] = useState(!(window.innerWidth <= 800))
+  const [isActive,setIsActive] = useState(window.innerWidth <= 800)
   const [isOpened,setIsOpened] = useState(!(window.innerWidth <= 800))
   const [sideContent,setSideContent] = useState("hoge")
 
@@ -53,6 +56,13 @@ const Base = () => {
                 <Route path="/" exact>
                   <Top setSideContent={setSideContent}/>
                 </Route>
+                <Route path="/article/:pk">
+                  <Article setSideContent={setSideContent}/>
+                </Route>
+                <Route path="/404">
+                  <Page404 />
+                </Route>
+                <Redirect to="/404" />
               </Switch>
               <Footer/>
             </div>

@@ -23,8 +23,10 @@ const Top = (props) => {
   const [isLoaded,setIsLoaded] = useState(false)
   const [category,setCategory] = useState("")
   const [data,setData] = useState()
+  const [loadContent,setLoadContent] = useState(false)
   const location = useLocation()
 
+  // 初回ロードとGETパラメータ遷移の対応
   useEffect(
     () => {
       // APIを叩きにいく関数
@@ -48,6 +50,16 @@ const Top = (props) => {
       fetchData()
     },
     [location]
+  )
+  // サイドバーのコンテンツ描画
+  useEffect(
+    () => {
+      if(!loadContent){
+        props.setSideContent((<SideContent />))
+        setLoadContent(true)
+      }
+    },
+    []
   )
 
 

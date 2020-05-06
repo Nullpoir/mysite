@@ -1,280 +1,72 @@
-
-import React from "react";
-import ReactDOM from "react-dom";
-import Top from './Top.js';
-import Article from './Article.js';
-import Inquiry from './Inquiry.js';
-import Privacy from './Privacy.js';
-import AdsCard from './AdsCard.js';
-import Page404 from './Page404.js';
-import Initializer from './Initializer.js';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import css from 'styled-jsx/css';
-import {side_style,side_popup_style,btn_style} from "./styles/base.js";
-
-
-class NavButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen:false
-    };
-  };
-
-
-  clickHandler(e) {
-    let state = this.state.isOpen;
-    this.setState({isOpen: !state});
-    this.props.updateState(
-      {
-        isActive: !this.props.isActive
-      }
-    );
-  }
-
-  barClass(state){
-    if(state){
-      return "menu-bars isOpen"
-    } else {
-      return "menu-bars"
-    }
-  }
-  render() {
-    let menuClass = this.barClass(this.state.isOpen);
-    return (
-      <div className="nav-button" onClick={() => this.clickHandler()}>
-        <span className={menuClass}></span>
-        <span className={menuClass}></span>
-        <style jsx>{btn_style}</style>
-      </div>
-    );
-  }
-
-}
-
-class Header extends React.Component {
-
-  render() {
-    if(this.props.isToggle){
-      return (
-        <div>
-          <header id="header">
-            <Link to="/?categories=&title=&tags=" className="header__title">
-              Nullab
-            </Link>
-          </header>
-        </div>
-        );
-      } else {
-        return (
-          <div>
-            <header id="header">
-              <Link to="/?categories=&title=&tags=" className="header__title">
-                Nullab
-              </Link>
-              <NavButton isActive={this.props.isActive} updateState={this.props.updateState} />
-            </header>
-          </div>
-          );
-      }
-
-  }
-
-}
-
-class Footer extends React.Component {
-  render() {
-    return (
-      <div>
-        <footer id="footer">
-          <div className="link-field">
-            <a href="https://github.com/nullpoir">
-              GitHub
-            </a>
-            &nbsp;&nbsp;
-            <a href="https://twitter.com/nullpoir">
-              Twitter
-            </a>
-            &nbsp;&nbsp;
-            <Link to="/inquiry">
-              Inquiry
-            </Link>
-            &nbsp;&nbsp;
-            <Link to="/privacy">
-              PrivacyPolicy
-            </Link>
-          </div>
-          <div className="copyright">
-            Copyright Nullab Since 2019.2
-          </div>
-        </footer>
-      </div>
-    );
-  }
-
-}
-
-class Sidebar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  };
-
-  render() {
-    if(!this.props.isActive){
-      return(
-        <div>
-        <div
-          className="side"
-          dangerouslySetInnerHTML = {
-            {
-              __html:this.props.content
-            }
-          }
-         />
-          <style jsx>{side_style}</style>
-        </div>
-      )
-    } else {
-      const sideContent = this.props.content;
-      return(
-        <div>
-        <div
-          className="side"
-         >{sideContent}</div>
-          <style jsx>{side_popup_style}</style>
-        </div>
-      )
-    }
-  };
-}
-
-class Base extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isToggle: false,
-      isActive: window.innerWidth <= 800,
-      side: "",
-    };
-    this.updateState = this.updateState.bind(this);
-  };
-  updateState(state) {
-    this.setState(state);
-  }
-
-  componentDidMount() {
-    window.addEventListener("resize", this.resize.bind(this));
-    this.resize();
-  }
-
-  componentWillUnMount() {
-    window.removeEventListener("resize", this.resize.bind(this));
-  }
-
-  resize() {
-    if(window.innerWidth <= 800){
-      this.setState(
-        {
-          isActive: false,
-          isToggle: false,
-        }
-      );
-    } else {
-      this.setState(
-        {
-          isActive: true,
-          isToggle: true,
-        }
-      );
-    }
-  }
-  render() {
-    return (
-      <div id="root">
-        <Router>
-          <Initializer>
-            <Header isToggle={this.state.isToggle} isActive={this.state.isActive} updateState={this.updateState}/>
-              <div id="content">
-                <div id="main-content">
-                  <Switch>
-                    <Route exact path="/" render={(props) => <Top updateState={this.updateState}/>} />
-                    <Route exact path="/article/:pk" render={(props) => <Article updateState={this.updateState}/>}/>
-                    <Route exact path="/inquiry" component={Inquiry} />
-                    <Route exact path="/privacy" component={Privacy} />
-                    <Route component={Page404} />
-                  </Switch>
-                  <Footer />
-                </div>
-                <Sidebar content={this.state.side} isActive={this.state.isActive}/>
-              </div>
-          </Initializer>
-        </Router>
-      </div>
-    );
-  }
-
-}
-
-
-
-export default Base;
-ReactDOM.render(<Base />, document.getElementById("App"));
-
-
-
 import React, { Component } from 'react';
-import ReactDOM from "react-dom";
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import css from 'styled-jsx/css'
 import moment from 'moment/moment'
-import queryString from 'query-string'
-import {
-  search_style, tags_style1,
-  tags_style2, card_style,
-  list_style, pager_style,
-  null_style
-} from "./styles/top-styles.js";
-import Pager from './top-subcomps/Pager.js';
-import Search from './top-subcomps/Search.js';
-import Tags from './top-subcomps/Tags.js'
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
+import article_style,{null_style} from './styles/article-styles.js';
 import { Helmet } from 'react-helmet';
-import Categories from './top-subcomps/Categories.js';
-import AdsCard from './AdsCard.js';
+import Page404 from './Page404.js';
 import LazyLoad from 'react-lazyload';
+import AdsCard from './AdsCard.js';
+import hljs from 'highlightjs'
+import {tags_style1,　tags_style2} from './styles/top-styles.js';
+import Tags from './top-subcomps/Tags.js'
+import { related_list,related_card_style } from './styles/article-styles.js';
 
-class ArticleList extends Component {
+class SideContent extends Component{
   constructor(props) {
     super(props);
-  };
-  render(){
-    const items = this.props.list.map(
-      (item,index) => <Card
-                        id={item.pk}
-                        key = {index}
-                        title = {item.title}
-                        thumbnail = {item.thumbnailUrl}
-                        pub_date = {item.pubDate}
-                        tags = {item.tags}
-                        />
-                      )
+    this.indexRef = React.createRef();
+
+  }
+
+  clickListener(e) {
+    e.preventDefault();
+    let nowY = window.pageYOffset;
+    const href = e.currentTarget.getAttribute('href');
+    const target = document.querySelector(href);
+    if( target != null){
+      const targetRectTop = target.getBoundingClientRect().top;
+      const targetY = targetRectTop + nowY - 50;
+
+      window.scrollTo(0, targetY);
+    }
+  }
+  componentWillUnmount(){
+    document.removeEventListener('click',this.clickListener);
+  }
+  componentDidMount(){
+    let links = document.querySelectorAll('a[href^="#"]');
+    for(let i = 0; i < links.length; i++){
+      links[i].addEventListener('click',this.clickListener);
+    }
+
+  }
+  render() {
     return(
-      <div className="card-container">
-        {items}
-        <style jsx>{list_style}</style>
+      <div>
+        <h2>目次</h2>
+        <div
+          className="index"
+          dangerouslySetInnerHTML={
+            {
+              __html: this.props.index
+            }
+          }
+          ref={indexRef => this.indexRef=indexRef}
+        />
       </div>
-    )
+    );
   }
 }
-class Card extends Component {
+class RelatedCard extends Component {
   render() {
     let dt = moment(this.props.pub_date);
     return(
       <article className="card">
-        <Link to={"/article/"+this.props.id}>
+        <a href={"/article/"+this.props.id}>
         <div className="card-link-field">
           <div className="card-thumbnail-container">
             <LazyLoad>
@@ -284,133 +76,209 @@ class Card extends Component {
           <div className="card-date" >{dt.format("YYYY/MM/DD HH:mm:ss")}</div>
           <div className="card-title">{this.props.title}</div>
         </div>
-        </Link>
-
-        {
-          this.props.tags != undefined &&
-            <div className="card-lower">
-              <Tags tags={this.props.tags} />
-            </div>
-        }
-
-        <style jsx>{card_style}</style>
+        </a>
+        <style jsx>{related_card_style}</style>
       </article>
     );
   }
 
 }
 
-class SideContent extends Component{
-
-  render() {
-    const content = (
+class RelatedPost extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
+  render(){
+    console.log(this.props.list);
+    const relatedPostList = this.props.list;
+    const items = this.props.list.map(
+      (item,index) => <RelatedCard
+                        id={item.pk}
+                        key={index}
+                        title={item.title}
+                        thumbnail={item.thumbnailUrl}
+                        pub_date={item.pubDate}
+                        />
+                      )
+    return(
       <div>
-        <h2>自己紹介</h2>
-        名前：ぬるぽいんた<br/>
-        自称フルスタックエンジニア＆スローループマイスター<br/>
+        <h2>関連記事</h2>
+        <div className="related-container">
+          {items}
+          <style jsx>{related_list}</style>
+        </div>
       </div>
     );
-    return(content);
+
   }
 }
 
-class Top extends Component {
+
+class Article extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      loaded:false,
-      query: "null",
-      category: "トップ"
-    };
-  };
-
-  static propTypes = {
-    match: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired
+      loading:false
+    }
+    this.articleRef = React.createRef();
+    this.isInitialized = false;
+    this.updateToc = this.updateToc
   }
 
-  componentDidUpdate(prevProps,prevState) {
-    if (this.props.location.search !== prevProps.location.search){
-      let query = this.props.location.search;
-      let qs = queryString.parse(query)
-      let category = qs.categories ? qs.categories : "トップ"
-      if(category == undefined){category="トップ"}
-      this.setState({helmetTitle: category})
-
-      return fetch('/spa/1.0/article/?field=body&field=related_posts&field=meta&'+query.slice(1))
-        .then((response) => response.json())
-        .then((responseJson) => {
-          this.setState({
-            loaded: true,
-            data: responseJson,
-          });
-        })
-        .catch((error) =>{
-          console.error(error);
-        });
+  lazyLoading(entries) {
+    entries.forEach(
+    (entry) => {
+      if(entry.intersectionRatio != 0) {
+        entry.target.src = entry.target.dataset.src;
+        this.unobserve(entry.target);
+      };
       }
-  };
+    );
+  }
+  componentDidUpdate(prev) {
+    if(this.articleRef != null && !this.isInitialized ){
+      // ドキュメント取得
+      const content = document
+      // 遅延読み込みのイベントリスな
+      const lazyListener = () => {
+        let io = new IntersectionObserver(
+            this.lazyLoading,
+            {
+              root: null,
+              rootMargin: "0px 0px 0px 0px",
+              threshold: [0.05],
+            }
+
+        );
+        let imgs = content.querySelectorAll('.lazyload');
+        for(var i = 0;i < imgs.length;i++) {
+          io.observe(imgs[i]);
+         }
+         content.removeEventListener('scroll',lazyListener);
+       }
+      // 遅延読み込みのイベント登録
+      content.addEventListener('scroll',lazyListener);
+
+      // シンタックスハイライターのイベントリスナ
+      const codeListener = () => {
+        content.querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightBlock(block);
+          });
+         content.removeEventListener('scroll',codeListener);
+      }
+      // シンタックスハイライターのイベント登録
+      content.addEventListener('scroll',codeListener);
+
+      // 初期化完了フラグ
+      this.isInitialized = true;
+    }
+  }
   componentDidMount(){
-    this.setState({
-      loaded:false,
-      helmetTitle: "トップ"
-    });
-    this.props.updateState({side: <SideContent />});
-    let query = this.props.location.search;
-    fetch('/spa/1.0/article/?field=body&field=index&field=meta&'+query.slice(1))
+
+    const {params} = this.props.match;
+    const pk = params.pk;
+    // APIにfetch
+    fetch('/spa/1.0/article/'+pk+"/")
       .then((response) => response.json())
       .then((responseJson) => {
-        this.setState({
-          loaded: true,
-          data: responseJson,
-        });
-      })
-      .catch((error) =>{
-        console.error(error);
+        if(responseJson.detail == undefined){
+          this.setState({
+            loading: true,
+            status:true,
+            data: responseJson,
+          });
+          this.props.updateState(
+            {
+              side: <SideContent
+                      index={this.state.data[0].index}
+                    />
+            });
+        } else {
+          this.setState({
+            loading: true,
+            status:false,
+          });
+        }
+      }).catch((error) =>{
+        console.log(error)
       });
+
+
+
       return 0;
-  };
+  }
 
   render() {
-    const { match, location, history } = this.props;
-    if(this.state.loaded){
-      let list = this.state.data.results.slice();
-      let tString = "nullab | "+ this.state.helmetTitle
+    // もしloading中なら
+    if(this.state.loading){
+      // 記事が存在する場合
+      if(this.state.status){
+        // 記事の執筆日時をmomentに変換
+        let dt = moment(this.state.data[0].pubDate);
+        let title = "nullab | "+this.state.data[0].title;
+        let metaContent = this.state.data[0].meta;
+        const breadcrumbLink="/?categories=" + this.state.data[0].categoryName;
         return(
-          <div className="content-root">
-            <Helmet
-              title={tString}
-              meta={[
-                {name:"description",content:"自称フルスタックエンジニアが運営するブログ"}
-              ]}
+          <div className="article-container">
+          <Helmet>
+            <title>
+              { title }
+            </title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css" />
+            <meta name="description" content={metaContent} />
+          </Helmet>
+            {/*パンクズ表示*/}
+            <Link to="/">TOP</Link> > <Link to={breadcrumbLink}>{this.state.data[0].categoryName}</Link>
+            {/*タイトル表示*/}
+            <div className="article-title">
+              { this.state.data[0].title }
+            </div>
+            {/*タグ表示*/}
+            <div className="article-tags">
+              <Tags tags={this.state.data[0].tags} />
+            </div>
+            {/*公開日時表示*/}
+            <div className="article-pubDate">
+              {dt.format("YYYY/MM/DD HH:mm:ss")}
+            </div>
+            {/*本文*/}
+            <div
+              className="article-body"
+              dangerouslySetInnerHTML={
+              {
+                __html: this.state.data[0].body
+              }
+              }
+              ref={articleRef => this.articleRef=articleRef}
             />
-            <Categories />
-            {/*  検索 */}
-            <Search />
-            {/*リスト表示 */}
-            <ArticleList list={list} />
-            <Pager
-              current={this.state.data.current}
-              next={this.state.data.next}
-              prev={this.state.data.previous}
-              last={this.state.data.last}
-              />
-              <AdsCard />
+            <RelatedPost list={this.state.data[0].relatedPosts}/>
+            {/*CSS*/}
+            <style jsx>{article_style}</style>
+            <AdsCard />
           </div>
         );
-      } else {
-          return(
-            <div className="null-field">
-              <Helmet>
-                <title>
-                  nullab | トップ
-                </title>
-              </Helmet>
-            </div>
-          );
+      }else{
+        // 記事が存在しない場合
+        return(
+          <div>
+            <Page404 />
+            <AdsCard />
+          </div>
+        );
       }
+    } else {
+      // loading中でなければ
+      return(
+        <div className="null-field">
+          <style jsx>{null_style}</style>
+        </div>
+      );
     }
 
+
+  }
 }
-export default withRouter(Top);
+
+export default withRouter(Article);
