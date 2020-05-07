@@ -21,7 +21,8 @@ const Initializer = (props) => {
       window.scrollTo(0, 0)
       ReactGA.set({ page: location.pathname })
       ReactGA.pageview(location.pathname)
-    }
+    },
+    [location]
   )
 
   return(props.children)
