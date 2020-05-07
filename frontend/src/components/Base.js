@@ -5,6 +5,7 @@ import Top from './Top.js'
 import Page404 from './Page404.js'
 import Article from './Article.js'
 import Privacy from './Privacy.js'
+import Inquiry from './Inquiry.js'
 import Initializer from './Initializer.js'
 import {
   BrowserRouter as Router,
@@ -23,7 +24,7 @@ const Base = () => {
   const [toggle,setToggle] = useState(false)
   const [isActive,setIsActive] = useState(window.innerWidth <= 800)
   const [isOpened,setIsOpened] = useState(!(window.innerWidth <= 800))
-  const [sideContent,setSideContent] = useState("hoge")
+  const [sideContent,setSideContent] = useState("")
 
   // リサイズで再度コンテンツの表示制御
   const resize = () => {
@@ -62,6 +63,9 @@ const Base = () => {
                 </Route>
                 <Route path="/privacy">
                   <Privacy setSideContent={setSideContent}/>
+                </Route>
+                <Route path="/inquiry">
+                  <Inquiry setSideContent={setSideContent}/>
                 </Route>
                 <Route path="/404">
                   <Page404 />
