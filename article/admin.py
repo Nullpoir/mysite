@@ -3,7 +3,6 @@ from .models import Article
 from .models import Tag,Comment,Category
 from django import forms
 from datetime import datetime
-from .forms import TagSuggestForm
 
 from filer.models.foldermodels import Folder
 from .CustomAdmins import CustomFolderAdmin
