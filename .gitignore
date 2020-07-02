@@ -3,3 +3,4 @@ db.sqlite3
 media/
 mysite/settings/.env
 node_modules/
+yarn-error.log
