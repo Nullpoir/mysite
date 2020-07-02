@@ -115,8 +115,10 @@ class Article(models.Model):
 
     def related_posts(self):
         query = Q()
+        print(self.tags.all())
         for t in self.tags.all():
-            query.add(Q(tags=t),Q.OR)
+            query.add(Q(tags=t),Q.AND)
+        query.add(Q(category=self.category),Q.AND)
         query.add(Q(pub_date__lte=self.pub_date),Q.AND)
         query.add(Q(pub_type=1),Q.AND)
         article_list = []
