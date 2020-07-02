@@ -37,7 +37,7 @@ const Top = (props) => {
         let query = location.search
         let qs = queryString.parse(query)
         setCategory(qs.categories ? qs.categories : "トップ")
-        const res = await fetch('/spa/1.0/article/?field=body&field=index&field=meta&'+query.slice(1))
+        const res = await fetch('/spa/1.0/article/?field=body&field=index&field=meta&field=related_posts&'+query.slice(1))
         res
           .json()
           .then(
