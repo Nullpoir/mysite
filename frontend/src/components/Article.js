@@ -14,6 +14,7 @@ import Tags from './subcomponents/Top/Tags.js'
 import Page404 from './Page404.js'
 import './stylus/article.styl'
 import AdsCard from './AdsCard.js'
+import LazyLoad from 'react-lazyload';
 
 
 const Article = (props) => {
@@ -43,6 +44,28 @@ const Article = (props) => {
       fetchData()
     },
     []
+  )
+
+  useEffect(
+    () => {
+      async function fetchData() {
+        const res = await fetch('/spa/1.0/article/' + pk + '/')
+        res
+          .json()
+          .then(
+            res => {
+              if (res.detail == undefined) {
+                setStatus(true)
+              }
+              setData(res)
+              setIsLoaded(true)
+            }
+          )
+          .catch(err => console.log(err))
+      }
+      fetchData()
+    },
+    [pk]
   )
 
   useEffect(
@@ -134,6 +157,7 @@ const Article = (props) => {
               }
             }
           />
+        <RelatedPost list={data[0].relatedPosts} />
         <AdsCard />
         </div>
       )
@@ -194,4 +218,50 @@ const SideContent = (props) => {
     </div>
   )
   return(content)
+}
+
+const RelatedCard = (props) => {
+  let dt = moment(props.pub_date);
+
+  return (
+    <article className="card">
+      <Link to={"/article/" + props.id}>
+        <div className="card-link-field">
+          <div className="card-thumbnail-container">
+            <LazyLoad>
+              <img className="card-thumbnail" src={props.thumbnail} />
+            </LazyLoad>
+          </div>
+          <div className="card-date" >{dt.format("YYYY/MM/DD HH:mm:ss")}</div>
+          <div className="card-title">{props.title}</div>
+        </div>
+      </Link>
+
+    </article>
+  );
+
+}
+
+const RelatedPost = (props) => {
+  console.log(props.list);
+  const relatedPostList = props.list;
+  const items = props.list.map(
+    (item, index) => <RelatedCard
+      id={item.pk}
+      key={index}
+      title={item.title}
+      thumbnail={item.thumbnailUrl}
+      pub_date={item.pubDate}
+    />
+  )
+  return (
+    <div>
+      <h2>関連記事</h2>
+      <div className="related-container">
+        {items}
+      </div>
+    </div>
+  );
+
+  
 }

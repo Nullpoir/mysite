@@ -1,25 +1,13 @@
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from .models import Article
-import datetime
-from pytz import timezone
-from article.tasks import scheduled_worker
-from django.db.models import signals
-from celery.task.control import revoke
-from contextlib import contextmanager
 from article.utils.twitter.twitter_post import twitter_publisher
 import os
 from django.conf import settings
+import datetime
+from pytz import timezone
+import os
+from celery.task.control import revoke
+from article.tasks import scheduled_worker
 
-# receiverを作動させないwith作成
-@contextmanager
-def disable_signal(signal, receiver, sender=None, weak=True, dispatch_uid=None):
-    signal.disconnect(receiver, sender, dispatch_uid=dispatch_uid)
-    yield
-    signal.connect(receiver, sender, weak=weak, dispatch_uid=dispatch_uid)
-
-@receiver(post_save, sender=Article)
-def sns_publish_handler(sender, instance, created, **kwargs):
+def sns_publish_handler(instance):
     now = datetime.datetime.now(timezone('Asia/Tokyo'))
     pub_date = instance.pub_date
     pub_type = instance.pub_type

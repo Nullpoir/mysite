@@ -10,6 +10,7 @@ from filer.fields.image import FilerImageField
 from filer.models.imagemodels import Image
 from .utils.article_converter import article_convert
 from django.core import serializers
+from article.utils.SNSPublisher import sns_publish_handler
 
 #公開タイプ選択ソース
 PUB_TYPES=(
@@ -80,6 +81,7 @@ class Article(models.Model):
     meta = models.CharField(verbose_name='メタ情報',max_length=150,blank=True)
     sns_intro = models.CharField(verbose_name='SNS文章',max_length=140,blank=True)
     pv = models.PositiveIntegerField(verbose_name='PV数',default=0)
+    related_posts = models.ManyToManyField('self',verbose_name='関連記事',blank=True)
 
     # CeleryTask管理用
     celery_id = models.CharField(max_length=36,blank=True,null=True)
@@ -109,24 +111,28 @@ class Article(models.Model):
         self.meta = MetaContentPublisher(self.edit_body)
         self.body,self.index = article_convert(self.edit_body)
         super(Article, self).save()
-
-    def related_posts(self):
         query = Q()
         for t in self.tags.all():
             query.add(Q(tags=t),Q.OR)
         query.add(Q(pub_date__lte=self.pub_date),Q.AND)
         query.add(Q(pub_type=1),Q.AND)
         article_list = []
-        related_posts_list = Article.objects.all().filter(query).order_by('pub_date').reverse().distinct().exclude(pk=self.pk)[:6]
-        print(related_posts_list,query)
+        related_posts_list = Article.objects.all(
+                            ).filter(
+                                query
+                            ).order_by(
+                                'pub_date'
+                            ).reverse(
+
+                            ).distinct(
+
+                            ).exclude(
+                                pk=self.pk
+                            )[:6]
         for i in related_posts_list:
-            article_list.append({
-                            'pk': i.pk,
-                            'title':i.title,
-                            'pub_date':i.pub_date,
-                            'thumbnail_url':i.thumbnail_url()
-            })
-        return article_list
+            self.related_posts.add(i)
+        super(Article, self).save()
+        sns_publish_handler(self)
 
     def delete(self):
         #もしタスクがあれば破棄

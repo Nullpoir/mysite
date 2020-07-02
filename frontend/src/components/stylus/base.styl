@@ -2,90 +2,90 @@
 @import './reset.styl'
 /* 初期化 */
 *
-  box-sizing border-box
-  line-height 1.5
+  box-sizing: border-box
+  line-height: 1.5
 
 img
-  max-width 500px
-  height auto
+  max-width: 500px
+  height: auto
 
 
 html
-  font-size 10px
+  font-size: 10px
 
 
 body
-  margin 0
-  padding 0
+  margin: 0
+  padding: 0
 
 a
-  text-decoration none
+  text-decoration: none
 
 
 /* 共通部分 */
 #root
-  margin 0
-  padding 0
-  width 100%
-  min-height 100vh
-  font-size 1.6rem
-  display flex
-  flex-direction column
-  justify-content flex-start
+  margin: 0
+  padding: 0
+  width: 100%
+  min-height: 100vh
+  font-size: 1.6rem
+  display: flex
+  flex-direction: column
+  justify-content: flex-start
 
 #header
-  display flex
-  justify-content space-between
-  align-items center
-  height 50px
-  width 100%
-  padding 10px 5%
-  background-color $theme-black
-  position fixed
-  top 0
-  z-index 100
+  display: flex
+  justify-content: space-between
+  align-items: center
+  height: 50px
+  width: 100%
+  padding: 10px 5%
+  background-color: $theme-black
+  position: fixed
+  top: 0
+  z-index: 100
 
 .header__title
-  font-size 3rem
-  color $theme-blue
-  text-decoration none
+  font-size: 3rem
+  color: $theme-blue
+  text-decoration: none
 
 
 #content
-  margin 0
-  flex 1
-  word-wrap break-word
-  min-height calc(100vh - 50px)
-  padding-top 50px
-  display flex
-  position relative
+  margin: 0
+  flex: 1
+  word-wrap: break-word
+  min-height: calc(100vh - 50px)
+  padding-top: 50px
+  display: flex
+  position: relative
   /* margin-top 50px */
 
 #main-content
-  display flex
-  flex-direction column
-  justify-content space-between
-  width 75%
-  padding-top 10px
-  padding-right 5%
-  padding-left 5%
-  word-wrap break-word
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  width: 75%
+  padding-top: 10px
+  padding-right: 5%
+  padding-left: 5%
+  word-wrap: break-word
 
 #footer
-  flex 0
-  display flex
-  flex-direction column
-  align-items center
-  justify-content center
-  margin 5px 0
+  flex: 0
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  margin: 5px 0
 
 .link-field
-  display flex
-  justify-content center
-  align-items center
+  display: flex
+  justify-content: center
+  align-items: center
 
 .copyright
-  text-align center
+  text-align: center
 
 // 共通のメディアクエリ
 @media screen and (max-width 800px)
@@ -97,16 +97,16 @@ a
     /* margin-top 50px */
 
   #main-content
-    display flex
-    flex-direction column
-    justify-content space-between
-    width 100%
-    padding-top 10px
-    padding-left 1%
-    padding-right 1%
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    width: 100%
+    padding-top: 10px
+    padding-left: 1%
+    padding-right: 1%
   img
-    max-width 100%
-    height auto
+    max-width: 100%
+    height: auto
 
 
 
@@ -114,131 +114,131 @@ a
 記事用スタイルシート
  */
 pre
-  background $pre-color
-  color white
-  overflow-x scroll
+  background: $pre-color
+  color: white
+  overflow-x: scroll
 
 code
-  overflow-x auto
-  white-space pre
+  overflow-x: auto
+  white-space: pre
 
 
 .article-body h2
- margin 10px 0
- border-bottom dotted 1px gray
- font-size 2.5rem
+ margin: 10px 0
+ border-bottom: dotted 1px gray
+ font-size: 2.5rem
 
 .article-body h3
- margin 10px 0
- border-bottom dotted 1px gray
+ margin: 10px 0
+ border-bottom: dotted 1px gray
 
 
 .article-body h2:before
- content ""
- width 100%
- display block
- margin-top 50px
+ content: ""
+ width: 100%
+ display: block
+ margin-top: 50px
 
 .article-body h3:before
- content ""
- width 100%
- display block
- margin-top 50px
+ content: ""
+ width: 100%
+ display: block
+ margin-top: 50px
 
 .index
- display flex
- flex-direction column
+ display: flex
+ flex-direction: column
 
 
 .index-h2item
- margin 0
- font-size 2rem
+ margin: 0
+ font-size: 2rem
 
 .index-h3item
- margin-left 40px
- font-size 2rem
+ margin-left: 40px
+ font-size: 2rem
 
 .index-h4item
- margin-left 80px
- font-size 2rem
+ margin-left: 80px
+ font-size: 2rem
 
 // ハンバーガーメニュー
 .nav-button
-  height 100%
-  display flex
-  align-items center
-  flex-direction column
-  justify-content center
-  cursor pointer
+  height: 100%
+  display: flex
+  align-items: center
+  flex-direction: column
+  justify-content: center
+  cursor: pointer
 
 
 .menu-bars:nth-of-type(1)
-  height 8px
-  width 28px
-  display block
-  border-top solid 1px white
-  transition 0.5s
-  z-index 10003
+  height: 8px
+  width: 28px
+  display: block
+  border-top: solid 1px white
+  transition: 0.5s
+  z-index: 10003
 
 .menu-bars:nth-of-type(2)
-  height 8px
-  width 28px
-  display block
-  border-top solid 1px white
-  transition 0.5s
-  z-index 10003
+  height: 8px
+  width: 28px
+  display: block
+  border-top: solid 1px white
+  transition: 0.5s
+  z-index: 10003
 
 
 .menu-bars.is-active:nth-of-type(1)
-  transform rotate(-45deg)translateY(4px)translateX(3px)
-  transition 0.4
+  transform: rotate(-45deg)translateY(4px)translateX(3px)
+  transition: 0.4
 
 .menu-bars.is-active:nth-of-type(2)
-  transform rotate(45deg)translateY(-5px)translateX(-5px)
-  transition 0.4
+  transform: rotate(45deg)translateY(-5px)translateX(-5px)
+  transition: 0.4
 
 // サイドバー
 .side
-  display inline-block
-  background-color $side-color
-  border-left solid 1px $side-border-color
-  min-height 100%
-  width 25%
+  display: inline-block
+  background-color: $side-color
+  border-left: solid 1px $side-border-color
+  min-height: 100%
+  width: 25%
   padding-left: 2%;
-  flex 1
-  position fixed
-  top 50px
-  bottom 0
-  right 0
+  flex: 1
+  position: fixed
+  top: 50px
+  bottom: 0
+  right: 0
 
 
 .side h2
   display: block;
-  font-size 1.5em;
-  margin-block-start 0.83em;
-  margin-block-end 0.83em;
-  margin-inline-start 0px;
-  margin-inline-end 0px;
-  font-weight bold
+  font-size: 1.5em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold
 
 @media screen and (max-width 800px)
   .side
-    display none
-    width 60%
+    display: none
+    width: 60%
 
   .side.is-opened
-    display block
-    padding-left 2%
-    word-wrap break-word
-    background-color $side-color
-    border-left solid 1px $side-border-color
-    z-index 50
-    -webkit-transform translate3d(0,0,0)
-    overflow-y scroll
+    display: block
+    padding-left: 2%
+    word-wrap: break-word
+    background-color: $side-color
+    border-left: solid 1px $side-border-color
+    z-index: 50
+    -webkit-transform: translate3d(0,0,0)
+    overflow-y: scroll
 
 // アドセンス
 .adsbygoogle
-  display block
+  display: block
 
 .ads-container
-  margin:10px 0
+  margin: 10px 0

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --mode development ./frontend/src/index.js --output ./static/js/main.js",
-    "build": "webpack --mode production ./frontend/src/index.js --output ./static/js/main.js"
+    "build": "webpack --mode production ./frontend/src/index.js --output ./static/js/main.js",
+    "watch": "gulp"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
     "@babel/preset-react": "^7.8.3",
     "babel-loader": "^8.0.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "gulp": "^4.0.2",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -34,6 +36,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "css-loader": "^3.5.3",
+    "gulp-webpack": "^1.5.0",
     "highlightjs": "^9.16.2",
     "intersection-observer": "^0.7.0",
     "minimist": "^1.2.5",
@@ -50,6 +53,7 @@
     "style-loader": "^1.2.1",
     "styled-components": "^4.4.1",
     "stylus": "^0.54.7",
-    "stylus-loader": "^3.0.2"
+    "stylus-loader": "^3.0.2",
+    "webpack-stream": "^5.2.1"
   }
 }
