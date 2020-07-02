@@ -110,29 +110,25 @@ class Article(models.Model):
         self.is_need_celery_change = self.tracker.has_changed('pub_date')
         self.meta = MetaContentPublisher(self.edit_body)
         self.body,self.index = article_convert(self.edit_body)
+        sns_publish_handler(self)
         super(Article, self).save()
+
+    def related_posts(self):
         query = Q()
         for t in self.tags.all():
             query.add(Q(tags=t),Q.OR)
         query.add(Q(pub_date__lte=self.pub_date),Q.AND)
         query.add(Q(pub_type=1),Q.AND)
         article_list = []
-        related_posts_list = Article.objects.all(
-                            ).filter(
-                                query
-                            ).order_by(
-                                'pub_date'
-                            ).reverse(
-
-                            ).distinct(
-
-                            ).exclude(
-                                pk=self.pk
-                            )[:6]
+        related_posts_list = Article.objects.all().filter(query).order_by('pub_date').reverse().distinct().exclude(pk=self.pk)[:6]
         for i in related_posts_list:
-            self.related_posts.add(i)
-        super(Article, self).save()
-        sns_publish_handler(self)
+            article_list.append({
+                            'pk': i.pk,
+                            'title':i.title,
+                            'pub_date':i.pub_date,
+                            'thumbnail_url':i.thumbnail_url()
+            })
+        return article_list
 
     def delete(self):
         #もしタスクがあれば破棄
