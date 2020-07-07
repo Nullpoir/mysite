@@ -4,3 +4,4 @@ media/
 mysite/settings/.env
 node_modules/
 yarn-error.log
+**/__pycache__/**
