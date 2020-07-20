@@ -27,6 +27,8 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "gulp": "^4.0.2",
+    "gulp-webpack": "^1.5.0",
+    "lodash": "^4.17.19",
     "lodash.template": "^4.5.0",
     "minimist": "^1.2.5",
     "prop-types": "^15.7.2",
@@ -38,7 +40,6 @@
   "dependencies": {
     "axios": "^0.19.2",
     "css-loader": "^3.5.3",
-    "gulp-webpack": "^1.5.0",
     "highlightjs": "^9.16.2",
     "intersection-observer": "^0.7.0",
     "moment": "^2.24.0",
