@@ -22,7 +22,7 @@ DATABASES = {
 }
 CELERY_RESULT_BACKEND = "django-db"
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'article.restful.pagination.MyPagination',
+    'DEFAULT_PAGINATION_CLASS': 'app.restful.pagination.MyPagination',
     'PAGE_SIZE': 2,
     'ORDERING': "pub_date",
     'DEFAULT_RENDERER_CLASSES': (

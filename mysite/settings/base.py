@@ -64,8 +64,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     # 以下こちらが作成したアプリのConfig
-    'article.apps.ArticleConfig',
-    'adminsortable',
+    'app.apps.AppConfig',
 ]
 
 FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'

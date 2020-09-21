@@ -1,6 +1,6 @@
 from django.contrib.sitemaps import Sitemap
 from django.shortcuts import resolve_url
-from article.models import Article
+from app.models import Article
 
 class ToppageSitemap(Sitemap):
     changefreq = "daily"
@@ -11,15 +11,15 @@ class ToppageSitemap(Sitemap):
     def location(self, obj):
         return resolve_url(obj)
 
-class ArticleSitemap(Sitemap):
+class appSitemap(Sitemap):
     changefreq = "monthly"
     priority = 0.5
 
     def items(self):
-        return Article.objects.published()
+        return app.objects.published()
 
     def location(self, obj):
-        return resolve_url('/article/'+str(obj.pk))
+        return resolve_url('/app/'+str(obj.pk))
 
     def lastmod(self, obj):
         return obj.pub_date

@@ -35,7 +35,7 @@ DATABASES = {
 CELERY_RESULT_BACKEND = 'db+postgresql+psycopg2://postgres:dkkk0805@localhost/nullabdb'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'article.restful.pagination.MyPagination',
+    'DEFAULT_PAGINATION_CLASS': 'app.restful.pagination.MyPagination',
     'PAGE_SIZE': 8,
     'ORDERING': "pub_date",
     'DEFAULT_RENDERER_CLASSES': (
