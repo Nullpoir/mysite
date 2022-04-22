@@ -2,7 +2,7 @@ amqp==2.5.1
 billiard==3.6.1.0
 celery==4.3.0
 certifi==2019.11.28
-Django==2.2.13
+Django==2.2.28
 django-admin-sortable==2.2
 django-cabinet==0.10.0
 django-celery-results==1.1.2
